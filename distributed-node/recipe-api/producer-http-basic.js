@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 
-const server = require("fastify")()
+const fs = require('fs');
+const server = require("fastify")({
+    https: {
+        key: fs.readFileSync(__dirname+'/tls/basic-private-key.key'),
+        cert: fs.readFileSync(__dirname+'/../shared/tls/basic-certificate.cert'),
+    }
+})
 const HOST = process.env.HOST || '127.0.0.1'
 const PORT = process.env.PORT || '4000'
 
@@ -27,9 +33,8 @@ server.get('/recipes/:id', async (req, reply) => {
             ]
         }
     }
-
 })
 
 server.listen(PORT, HOST, () => {
-    console.log(`Listening on http://${HOST}:${PORT}`)
+    console.log(`Listening on https://${HOST}:${PORT}`)
 })
