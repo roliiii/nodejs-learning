@@ -1,0 +1,23 @@
+syntax = "proto3";
+package recipe;
+
+service RecipeService{
+    rpc getRecipe(RecipeReq) returns (RecipeResp);
+}
+
+message RecipeReq {
+    int32 id = 1;
+}
+
+message RecipeResp {
+    int32 id = 1;
+    string name = 2;
+    string steps = 3;
+    repeated Ingredient ingredients = 4;
+}
+
+message Ingredient{
+    int32 id = 1;
+    string name = 2;
+    string quantity = 3;
+}
